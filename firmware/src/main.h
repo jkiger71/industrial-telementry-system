@@ -1,0 +1,8 @@
+//
+// Created by kiger on 8/22/2026.
+//
+
+#ifndef INDUSTRIAL_TELEMETRY_MAIN_H
+#define INDUSTRIAL_TELEMETRY_MAIN_H
+
+#endif //INDUSTRIAL_TELEMETRY_MAIN_H

@@ -1,0 +1,7 @@
+django>=5.0
+djangorestframework
+django-cors-headers
+django-filter
+markdown
+psycopg2-binary>=2.9.0
+django-environ==0.14.0

@@ -1,0 +1,30 @@
+# Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+bin/
+lib/
+include/
+
+# Django internal files
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# Configuration and Environment Secrets (NEVER push these)
+.env
+.env.local
+secrets.json
+
+# Python compilation artifacts
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# IDEs and OS configurations
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

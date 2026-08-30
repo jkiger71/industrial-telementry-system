@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  # 📡 MQTT Broker Service
+  mqtt-broker:
+    image: eclipse-mosquitto:latest
+    container_name: telemetry_mqtt_broker
+    restart: always
+    ports:
+      - "1883:1883"    # Standard MQTT port
+      - "9001:9001"    # MQTT over WebSockets
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+  # 🐘 PostgreSQL Database Service
+  db:
+    image: postgres:15-alpine
+    container_name: telemetry_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: industrial_telemetry
+      POSTGRES_USER: iot_admin
+      POSTGRES_PASSWORD: super_secure_dev_password_123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # 🐍 Django Backend Service
+  backend:
+    build: ./backend
+    container_name: django_backend
+    restart: always
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/app
+    env_file:
+      - ./backend/.env
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=industrial_telemetry
+      - DB_USER=iot_admin
+      - DB_PASSWORD=super_secure_dev_password_123
+    depends_on:
+      - db
+
+  # 🟢 Vue.js Frontend Service
+  frontend:
+    build: ./frontend
+    container_name: vue_frontend
+    restart: always
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules # Prevents local node_modules from overwriting container files
+    ports:
+      - "5173:5173"
+    environment:
+      - WATCHPACK_POLLING=true # Essential for Vite HMR (Hot Module Replacement) inside WSL
+    depends_on:
+      - backend
+
+# 💾 Permanent Storage Volumes
+volumes:
+  postgres_data:

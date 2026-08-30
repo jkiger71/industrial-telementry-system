@@ -1,0 +1,6 @@
+# Ignore build directories
+/cmake-build-*/
+/.idea/
+
+# Ignore private credentials and keys
+src/secrets.h

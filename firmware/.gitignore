@@ -1,0 +1,16 @@
+# CLion internal project files
+.idea/
+cmake-build-*/
+
+# Compiled artifacts and build directories
+build/
+*.o
+*.obj
+*.elf
+*.bin
+*.hex
+*.map
+
+# Embedded toolchains logs / temporary files
+.deps/
+src/secrets.h
